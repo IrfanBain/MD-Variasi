@@ -1,13 +1,16 @@
 import Navbar from "./component/element/navbar"
 import Mainbar from "./component/element/mainbar"
+import ProdukKategori from "./component/element/produkKategori"
+import Footer from "./component/element/footer"
 function App() {
 
 
   return (
     <div>
       <Navbar /> 
-      <Mainbar /> 
-      <h1 className='text-3xl font-bold text-center'></h1>
+      <Mainbar />
+      <ProdukKategorirodukKategori /> 
+      <Footer />
     </div>
   )
 }
