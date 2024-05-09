@@ -9,7 +9,7 @@ function App() {
     <div>
       <Navbar /> 
       <Mainbar />
-      <ProdukKategorirodukKategori /> 
+      <ProdukKategori /> 
       <Footer />
     </div>
   )
