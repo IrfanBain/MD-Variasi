@@ -31,7 +31,7 @@ export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   return (
-    <header className="bg-gray-100">
+    <header className="bg-white">
       <nav className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8" aria-label="Global">
         <div className="flex lg:flex-1 items-center">
           <a href="#" className="-m-1.5 p-1.5">
@@ -103,13 +103,13 @@ export default function Navbar() {
           </Popover>
 
           <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
-            Features
+            Tentang
           </a>
           <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
-            Marketplace
+            Medsos
           </a>
           <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
-            Company
+            Tim Kami
           </a>
         </Popover.Group>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">

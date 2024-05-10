@@ -9,7 +9,10 @@ export default {
     extend: {
       fontFamily: {
       sans: ['Inter var', ...defaultTheme.fontFamily.sans],
-      }
+      },
+      backgroundImage: {
+        'bg-image' : "url('/images/bgcar.jpeg')",
+      },
     },
   },
   plugins: [],

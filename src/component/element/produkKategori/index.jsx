@@ -41,7 +41,10 @@ const callouts = [
       <div className="">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-2xl py-16 sm:py-24 lg:max-w-none lg:py-32">
+            <div className="flex gap-3 items-center">
+            <div className="flex w-3 h-6 bg-orange-500"></div>
             <h2 className="text-2xl font-bold text-gray-900">Kategori</h2>
+            </div>
   
             <div className="mt-6 space-y-12 lg:grid lg:grid-cols-3 lg:gap-x-6 lg:space-y-0">
               {callouts.map((callout) => (
