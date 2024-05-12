@@ -4,15 +4,22 @@ import App from './App.jsx'
 import './index.css'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import TeamPage from './pages/TeamPage'
+import ErrorPage from './pages/ErrorPage/index.jsx'
+import ProdukView from './pages/Produk/ProdukView/index.jsx'
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <App />
+    element: <App />,
+    errorElement: <ErrorPage />
   },
   {
     path: '/teamPage',
     element: <TeamPage />
+  },
+  {
+    path: '/produkView',
+    element: <ProdukView />
   },
 
 ])
