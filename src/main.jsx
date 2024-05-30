@@ -7,6 +7,7 @@ import TeamPage from './pages/TeamPage'
 import ErrorPage from './pages/ErrorPage/index.jsx'
 import ProdukView from './pages/Produk/ProdukView/index.jsx'
 import ProdukShop from './pages/Produk/ProdukShop/index.jsx'
+import LoginPage from './pages/LoginPage/index.jsx'
 
 const router = createBrowserRouter([
   {
@@ -25,6 +26,10 @@ const router = createBrowserRouter([
   {
     path: '/shop',
     element: <ProdukShop />
+  },
+  {
+    path: '/admin',
+    element: <LoginPage />
   },
 
 ])

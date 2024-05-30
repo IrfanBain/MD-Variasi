@@ -2,6 +2,7 @@ import Navbar from "../../../component/layouts/navbar"
 import { GoChevronRight } from "react-icons/go"
 import { Link } from 'react-router-dom'
 import DropdownProduk from "../../../component/element/dropdownProduk"
+import Footer from "../../../component/layouts/footer"
 
 const products = [
     {
@@ -251,7 +252,7 @@ export default function ProdukShop() {
                     <button className="flex px-4 sm:px-6 lg:px-8 justify-between items-center">Ekterior Mobil <GoChevronRight /></button>
                     <button className="flex px-4 sm:px-6 lg:px-8 justify-between items-center">Lampu variasi <GoChevronRight /></button>
                 </div>
-                <div className="w-full mt-5 mx-4 sm:w-3/4 lg:w-4/5">
+                <div className="w-full mt-5 mx-4 mb-10 sm:w-3/4 lg:w-4/5">
                     <div className="flex justify-center mb-4 sm:hidden">
                         <DropdownProduk />
                     </div>
@@ -284,6 +285,8 @@ export default function ProdukShop() {
                 </div>
             </div>
 
+            <Footer />
         </>
+        
     )
 }
