@@ -6,6 +6,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import TeamPage from './pages/TeamPage'
 import ErrorPage from './pages/ErrorPage/index.jsx'
 import ProdukView from './pages/Produk/ProdukView/index.jsx'
+import ProdukShop from './pages/Produk/ProdukShop/index.jsx'
 
 const router = createBrowserRouter([
   {
@@ -20,6 +21,10 @@ const router = createBrowserRouter([
   {
     path: '/produkView',
     element: <ProdukView />
+  },
+  {
+    path: '/shop',
+    element: <ProdukShop />
   },
 
 ])

@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 export default function Mainbar() {
 
     return (
@@ -86,12 +88,12 @@ export default function Mainbar() {
                 </div>
               </div>
 
-              <a
-                href="#"
-                className="inline-block rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-center font-medium text-white hover:bg-indigo-700"
+              <Link
+                to={'/shop'}
+                className="inline-block rounded-md border border-transparent bg-green-600 px-8 py-3 text-center font-medium text-white hover:bg-green-700"
               >
-                Shop Collection
-              </a>
+                Belanja Sekarang
+              </Link>
             </div>
           </div>
         </div>
