@@ -7,13 +7,13 @@ function App() {
 
 
   return (
-    <div>
+    <>
       <Navbar /> 
       <Mainbar />
       <ProdukKategori /> 
       <ProdukList />
       <Footer />
-    </div>
+    </>
   )
 }
 
