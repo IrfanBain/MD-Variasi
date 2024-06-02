@@ -3,36 +3,36 @@ import {Link} from 'react-router-dom'
 
 const callouts = [
     {
-      name: 'Interior Mobil',
-      description: 'Perbaharui interior mobilmu di MD Variasi',
-      imageSrc: '/images/interior.jpeg',
+      name: 'Kopi Gratis',
+      description: 'Nunggunya sambil ngopi gratis bree',
+      imageSrc: '/images/kopi.jpg',
       imageAlt: 'Desk with leather desk pad, walnut desk organizer, wireless keyboard and mouse, and porcelain mug.',
       href: '#',
     },
     {
-      name: 'Eksterior Mobil',
-      description: 'Jadikan mobilmu menjadi keren!',
-      imageSrc: '/images/eksterior.jpeg',
+      name: 'Wifi Gratis',
+      description: 'Sambil ngopi bisa sambil internetan gratis dongg',
+      imageSrc: '/images/wifi.jpg',
       imageAlt: 'Wood table with porcelain mug, leather journal, brass pen, leather key ring, and a houseplant.',
       href: '#',
     },
     {
-      name: 'Cat mobil',
-      description: 'Ubah warna mobilmu sesukamu!',
-      imageSrc: '/images/catmobil.jpeg',
+      name: 'Garansi',
+      description: 'Bisa dapet garansi selama dua minggu pertama',
+      imageSrc: '/images/garansi.jpg',
       imageAlt: 'Collection of four insulated travel bottles on wooden shelf.',
       href: '#',
     },
   ]
   
-  export default function ProdukKategori() {
+  export default function Benefit() {
     return (
       <div className="">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-2xl py-9 sm:py-24 lg:max-w-none lg:py-32">
             <div className="flex gap-3 items-center">
             <div className="flex w-3 h-6 bg-orange-500"></div>
-            <h2 className="text-2xl font-bold text-gray-900">Keunggulan</h2>
+            <h2 className="text-2xl font-bold text-gray-900">Benefit</h2>
             </div>
   
             <div className=" mt-6 grid grid-cols-3 gap-x-3 gap-y-6 sm:grid-cols-3 lg:grid-cols-3  xl:gap-x-8">
@@ -47,7 +47,7 @@ const callouts = [
                 </div>
                 <div className="mt-4 flex justify-between">
                   <div>
-                    <h3 className="text-sm font-bold text-gray-700">
+                    <h3 className="text-md font-bold text-gray-900">
                       <Link to={product.href}>
                         <span aria-hidden="true" className="absolute inset-0" />
                         {product.name}

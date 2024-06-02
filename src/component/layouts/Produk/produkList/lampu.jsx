@@ -1,45 +1,34 @@
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { GoArrowRight } from "react-icons/go";
-const products = [
-    {
-      id: 1,
-      name: 'Basic Tee',
-      href: '/produkView',
-      imageSrc: 'images/eksterior.jpeg',
-      imageAlt: "Front of men's Basic Tee in black.",
-      price: '$35',
-      color: 'Black',
-    },
-    {
-      id: 1,
-      name: 'Basic Tee',
-      href: '/produkView',
-      imageSrc: 'images/eksterior.jpeg',
-      imageAlt: "Front of men's Basic Tee in black.",
-      price: '$35',
-      color: 'Black',
-    },
-    {
-      id: 1,
-      name: 'Basic Tee',
-      href: '/produkView',
-      imageSrc: 'images/eksterior.jpeg',
-      imageAlt: "Front of men's Basic Tee in black.",
-      price: '$35',
-      color: 'Black',
-    },
-    {
-      id: 1,
-      name: 'Basic Tee',
-      href: '/produkView',
-      imageSrc: 'images/eksterior.jpeg',
-      imageAlt: "Front of men's Basic Tee in black.",
-      price: '$35',
-      color: 'Black',
-    },
-  ]
+import { useState, useEffect } from 'react'
+import { db } from "../../../../config/firebase"
+import { collection, onSnapshot, where, query } from "firebase/firestore"
 
 export default function LampuList() {
+  
+  const [products, setProducts] = useState([])
+  // eslint-disable-next-line no-unused-vars
+  const [loading, setLoading] = useState(false)
+  const navigate = useNavigate()
+  
+useEffect(() => {
+    setLoading(true);
+    const productsRef = collection(db, "product");
+    const q = query(productsRef, where("kategori", "==", "lampu"));
+    const unsub = onSnapshot(q, (snapshot) => {
+      let list = [];
+      snapshot.docs.forEach((doc) => {
+        list.push({ id: doc.id,...doc.data() });
+      });
+      setProducts(list);
+      setLoading(false);
+    }, (error) => {
+      console.log(error);
+    });
+    return () => {
+      unsub();
+    };
+  }, []);
     return (
         <>
             <div className="bg-white">
@@ -50,22 +39,22 @@ export default function LampuList() {
               <div key={product.id} className="group relative">
                 <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80">
                   <img
-                    src={product.imageSrc}
-                    alt={product.imageAlt}
+                    src={product.img}
+                    alt={product.img}
                     className="h-full w-full object-cover object-center lg:h-full lg:w-full"
                   />
                 </div>
                 <div className="mt-4 flex justify-between">
                   <div>
                     <h3 className="text-sm text-gray-700">
-                      <Link to={product.href}>
+                      <Link onClick={() => navigate(`/produkView/${product.id}`)}>
                         <span aria-hidden="true" className="absolute inset-0" />
                         {product.name}
                       </Link>
                     </h3>
-                    <p className="mt-1 text-sm text-gray-500">{product.color}</p>
+                    <p className="mt-1 text-sm text-gray-500">Stok: tersedia</p>
                   </div>
-                  <p className="text-sm font-medium text-gray-900">{product.price}</p>
+                  <p className="text-sm font-medium text-gray-900">{product.harga}</p>
                 </div>
               </div>
             ))}

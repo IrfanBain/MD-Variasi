@@ -8,6 +8,9 @@ import ErrorPage from './pages/ErrorPage/index.jsx'
 import ProdukView from './pages/Produk/ProdukView/index.jsx'
 import ProdukShop from './pages/Produk/ProdukShop/index.jsx'
 import LoginPage from './pages/LoginPage/index.jsx'
+import DashboardHome from './pages/Dashboard/home/index.jsx'
+import DashboardForm from './pages/Dashboard/form/index.jsx'
+import RegisPage from './pages/reg/index.jsx'
 
 const router = createBrowserRouter([
   {
@@ -20,7 +23,7 @@ const router = createBrowserRouter([
     element: <TeamPage />
   },
   {
-    path: '/produkView',
+    path: '/produkView/:id',
     element: <ProdukView />
   },
   {
@@ -30,6 +33,18 @@ const router = createBrowserRouter([
   {
     path: '/admin',
     element: <LoginPage />
+  },
+  {
+    path: '/re',
+    element: <RegisPage />
+  },
+  {
+    path: '/dashboard/home',
+    element: <DashboardHome />
+  },
+  {
+    path: '/dashboard/form',
+    element: <DashboardForm />
   },
 
 ])
