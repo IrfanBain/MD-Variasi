@@ -4,8 +4,7 @@ import Benefit from "./component/layouts/Produk/Benefit"
 import Footer from "./component/layouts/footer"
 import ProdukList from "./component/layouts/Produk/produkList"
 import Bottom from "./component/layouts/bottom"
-function App() {
-
+export default function App() {
 
   return (
     <>
@@ -19,4 +18,3 @@ function App() {
   )
 }
 
-export default App

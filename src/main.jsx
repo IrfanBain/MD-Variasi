@@ -11,6 +11,7 @@ import LoginPage from './pages/LoginPage/index.jsx'
 import DashboardHome from './pages/Dashboard/home/index.jsx'
 import DashboardForm from './pages/Dashboard/form/index.jsx'
 import RegisPage from './pages/reg/index.jsx'
+import DashboardData from './pages/Dashboard/data/index.jsx'
 
 const router = createBrowserRouter([
   {
@@ -45,6 +46,14 @@ const router = createBrowserRouter([
   {
     path: '/dashboard/form',
     element: <DashboardForm />
+  },
+  {
+    path: '/dashboard/edit/:id',
+    element: <DashboardForm />
+  },
+  {
+    path: '/dashboard/data',
+    element: <DashboardData />
   },
 
 ])

@@ -1,53 +1,35 @@
-import { FolderMinusIcon, HomeIcon, CalendarDaysIcon, PhotoIcon, UserIcon, ArrowRightStarOnRectangleIcon } from "@heroicons/react/24/solid";
-import { Link,useNavigate } from "react-router-dom";
+import { FolderMinusIcon, HomeIcon, CalendarDaysIcon, PhotoIcon, UserIcon, ArrowRightStartOnRectangleIcon} from "@heroicons/react/24/solid";
+import { Link,useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { auth, db } from "../../../config/firebase";
-import { addDoc, collection, doc, getDoc, serverTimestamp } from "firebase/firestore";
+import { addDoc, updateDoc, collection, doc, getDoc, serverTimestamp } from "firebase/firestore";
 import { storage } from "../../../config/firebase"
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
-import Loading from "./loading";
+import { DocumentChartBarIcon } from "@heroicons/react/24/solid";
+
 
 const initialState = {
   name: "",
   harga: "",
+  stok: "",
   kategori: "",
   deskripsi: "",
 }
 
 export default function DashboardForm() {
   const navigate = useNavigate()
-  const [userDetails, setUserDetails] = useState(null);
-  const fetchUserData = async () => {
-    auth.onAuthStateChanged(async (user) => {
-      console.log(user);
-      if(!user) {
-        navigate('/admin')
-      }
-      const docRef = doc(db, "users", user.uid);
-      const docSnap = await getDoc(docRef);
-      if (docSnap.exists()) {
-        setUserDetails(docSnap.data());
-        console.log(docSnap.data());
-      } else {
-        console.log("User is not logged in");
-      }
-    });
-  };
-  useEffect(() => {
-    fetchUserData();
-  }, []);
-
-  async function handleLogout() {
-    try {
-      await auth.signOut();
-      navigate('/')
-      console.log("User logged out successfully!");
-    } catch (error) {
-      console.error("Error logging out:", error.message);
-    }
-  }
-  
+  const [data, setData] = useState(initialState)
+  const [file, setFile] = useState(null)
+  const [progress, setProgress] = useState(null)
+  const [isSubmit, setIsSubmit] = useState(false)
+  // eslint-disable-next-line no-unused-vars
+  const [errors, setErrors] = useState({})
   const [currentDate, setCurrentDate] = useState(new Date());
+  const {id} = useParams()
+  
+  useEffect(() => {
+    id && getSingleProduct()
+  }, [id])
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -59,17 +41,9 @@ export default function DashboardForm() {
     };
   }, []);
 
-
-
-  const [data, setData] = useState(initialState)
-  const [file, setFile] = useState(null)
-  const [progress, setProgress] = useState(null)
-  const [isSubmit, setIsSubmit] = useState(false)
-  const [errors, setErrors] = useState({})
-  
-
   useEffect(() => {
     const uploadFile = () =>{
+      // eslint-disable-next-line no-unused-vars
       const name = new Date().getTime() + file.name
       const storageRef = ref(storage, file.name)
       const uploadTask = uploadBytesResumable(storageRef, file)
@@ -101,8 +75,26 @@ export default function DashboardForm() {
       file && uploadFile()
   }, [file])
 
+  const getSingleProduct = async () => {
+    const docRef = doc(db, 'product', id)
+    const snapshot = await getDoc(docRef)
+    if (snapshot.exists()) {
+      setData({ ...snapshot.data() })
+    }
+  }
+
   const handleChange = (e) => {
     setData({ ...data, [e.target.name]: e.target.value })
+  }
+
+  async function handleLogout() {
+    try {
+      await auth.signOut();
+      navigate('/')
+      console.log("User logged out successfully!");
+    } catch (error) {
+      console.error("Error logging out:", error.message);
+    }
   }
 
   const validate = () => {
@@ -115,54 +107,67 @@ export default function DashboardForm() {
     e.preventDefault()
     let errors = validate()
     if (Object.keys(errors).length) return setErrors(errors)
-    setIsSubmit(true) 
-    if (isSubmit == true) {
-      navigate('/dashboard/home')
+    setIsSubmit(true)
+  if(!id) {
+    try{
+      await addDoc(collection(db, "product"), {
+        ...data,
+        timestamp: serverTimestamp()
+      })
+    } catch(error) {
+      console.log(error)
     }
-    await addDoc(collection(db, "product"), {
+  } else {
+    await updateDoc(doc(db, "product", id), {
       ...data,
       timestamp: serverTimestamp()
-    })
+      })
+
+  }
+    navigate('/dashboard/data')
   }
 
 
     return(
         <>
-        {userDetails ? (
           <div className="flex">
-            <div className="relative w-1/5">
-            <div className=" fixed border-r-2 border-gray-50 text-gray-100 bg-gray-800 h-screen w-1/5  p-2">
+          <div className="relative w-1/5">
+          <div className="fixed border-r-2 border-gray-50 text-gray-100 bg-gray-800 h-screen w-1/5  p-2">
                 <header className="flex items-center justify-center mb-4">
                     <Link to={'/'}>
                     <img src="/images/logo.png" alt="" width={'50px'} />
                     </Link>
-                    <h1 className="font-bold sm:text-2xl text-gray-100">MD VARIASI</h1>
+                    <h1 className="hidden lg:block font-bold sm:text-2xl text-gray-100">MD VARIASI</h1>
                 </header>
                 
-                <div className="flex flex-col justify-center mt-10 mx-5">
-                    <span className=" font-sans font-semibold mb-3">PAGES</span>
+                <div className="flex flex-col justify-center mt-10  lg:mx-5">
+                    <span className="text-sm lg:text-xl font-sans font-semibold mb-3">PAGES</span>
                     <div className="flex flex-col gap-3">
-                    <Link to={'/dashboard/home'} className="flex items-center gap-2 p-2 rounded-sm font-semibold">
-                        <HomeIcon className="w-6" />
+                    <Link to={'/dashboard/home'} className="flex text-xs lg:text-1xl items-center gap-2  p-2 rounded-sm font-semibold">
+                        <HomeIcon className="hidden lg:block w-6" />
                         Dashboard
                     </Link>
-                    <Link to={'/dashboard/form'} className="flex items-center gap-2 bg-gray-900 p-2 rounded-sm font-semibold0">
-                        <FolderMinusIcon className="w-6" />
+                    <Link to={'/dashboard/form'} className="flex text-xs bg-gray-900 lg:text-1xl items-center gap-2 p-2 rounded-sm font-semibold">
+                        <FolderMinusIcon className="hidden lg:block w-6" />
                         Form 
                     </Link>
-                    <button className="flex items-center gap-2 p-2 rounded-sm font-semibold" onClick={handleLogout}>
-                     <ArrowRightStarOnRectangleIcon />
+                    <Link to={'/dashboard/data'} className="flex text-xs lg:text-1xl items-center gap-2 p-2 rounded-sm font-semibold">
+                        <DocumentChartBarIcon className="hidden lg:block w-6" />
+                        Data Produk
+                    </Link>
+                    <button className="flex text-xs lg:text-1xl items-center gap-2 p-2 rounded-sm font-semibold" onClick={handleLogout}>
+                    <ArrowRightStartOnRectangleIcon className="hidden lg:block w-6"/>
                     Logout
-                    </button>                           
+                    </button>
                     </div>
 
                 </div>
 
             </div>
-            </div>
+                </div>
 
             {isSubmit ? (
-                <Loading />
+                <div className="flex justify-center mt-20"><p>Loading...</p></div>
             ) : (
             <div className="bg-gray-50 h-full w-4/5">
             <header className="flex bg-white justify-between px-10 py-5 ">
@@ -171,17 +176,17 @@ export default function DashboardForm() {
                 <p className="font-bold text-gray-800"> {currentDate.toLocaleDateString('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</p>
                 <p>{currentDate.toLocaleTimeString()}</p>
             </div>
-                <button className="text-gray-900">
+                <button className="text-gray-900 flex font-semibold">
                     <UserIcon className="w-7"/>
                 </button>
             </header>
-            <div className="px-28 py-10">
+            <div className="px-4 lg:px-28 py-10">
             <form onSubmit={handleSubmit}>
       <div className="space-y-12">
         <div className="border-b border-gray-900/10 pb-12">
-          <h2 className="text-base font-semibold leading-7 text-gray-900">Form Upload Barang</h2>
+          <h2 className="text-base font-semibold leading-7 text-gray-900">Form { id ? 'edit' : 'upload' } Barang</h2>
           <p className="mt-1 text-sm leading-6 text-gray-600">
-            Pastikan kamu sudah mematuhi SOP sebelum menguplod data!
+            Pastikan kamu sudah mematuhi SOP sebelum { id ? 'edit' : 'upload' } data!
           </p>
 
           <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
@@ -226,6 +231,26 @@ export default function DashboardForm() {
               </div>
             </div>
             <div className="sm:col-span-4">
+              <label htmlFor="namabarang" className="block text-sm font-medium leading-6 text-gray-900">
+                Stok Barang
+              </label>
+              <div className="mt-2">
+                <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                  <input
+                    type="number"
+                    name="stok"
+                    id="stokbarang"
+                    autoComplete="stokbarang"
+                    className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                    placeholder="stok barang"
+                    required
+                    onChange={handleChange}
+                    value={data.stok}
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="sm:col-span-4">
             <label htmlFor="countries" className="block mb-2 text-sm font-medium text-gray-900">Kategori</label>
           <select id="countries" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
           required
@@ -234,9 +259,9 @@ export default function DashboardForm() {
           value={data.kategori}
           >
             <option selected>Pilih Kategori</option>
-            <option value="interior">Interior </option>
-            <option value="eksterior">Eksterior</option>
-            <option value="lampu">Lampu</option>
+            <option value="Interior">Interior </option>
+            <option value="Eksterior">Eksterior</option>
+            <option value="Lampu">Lampu</option>
           </select>
             </div>
             <div className="col-span-full">
@@ -275,7 +300,9 @@ export default function DashboardForm() {
                       <span>Upload file</span>
                       <input id="file-upload" name="file-upload" type="file" className="sr-only"
                       onChange={(e) => setFile(e.target.files[0])}
-                      required />
+                      required
+                      {...(id ? { readOnly: true } : {})}
+                      />
                     </label>
                     <p className="pl-1">or drag and drop</p>
                   </div>
@@ -299,9 +326,7 @@ export default function DashboardForm() {
 
 
           </div>
-        ) : (
-          <p className="flex justify-center mt-72">Loading...</p>
-        )}
+        
         </>
     )
 }

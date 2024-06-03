@@ -61,11 +61,11 @@ export default function ProdukView() {
                                     <span className="text-gray-600 dark:text-gray-300"> Rp. {product.harga}</span>
                                 </div>
                                 <div>
-                                    <span className="font-bold text-gray-700 dark:text-gray-300">Stok :</span>
-                                    <span className="text-gray-600 dark:text-gray-300"> Tersedia</span>
+                                    <span className="font-bold text-gray-700 dark:text-gray-300">Stok : </span>
+                                    <span className="text-gray-600 dark:text-gray-300">{product.stok.length > 0 ? 'Tersedia' : 'Habis'}</span>
                                 </div>
                             </div>
-                                <div>
+                                <div className="mb-4">
                                     <span className="font-bold text-gray-700 dark:text-gray-300">Kategori :</span>
                                     <span className="text-gray-600 dark:text-gray-300"> {product.kategori}</span>
                                 </div>

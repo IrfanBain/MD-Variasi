@@ -2,7 +2,7 @@ import { Link, useNavigate } from "react-router-dom"
 import { GoArrowRight } from "react-icons/go";
 import { useState, useEffect } from 'react'
 import { db } from "../../../../config/firebase"
-import { collection, onSnapshot, where, query } from "firebase/firestore"
+import { collection, onSnapshot, where, query, limit } from "firebase/firestore"
 
 export default function ExteriorList() {
   const [products, setProducts] = useState([])
@@ -13,7 +13,7 @@ export default function ExteriorList() {
 useEffect(() => {
     setLoading(true);
     const productsRef = collection(db, "product");
-    const q = query(productsRef, where("kategori", "==", "eksterior"));
+    const q = query(productsRef, where("kategori", "==", "Eksterior"), limit(2));
     const unsub = onSnapshot(q, (snapshot) => {
       let list = [];
       snapshot.docs.forEach((doc) => {
@@ -51,7 +51,7 @@ useEffect(() => {
                         {product.name}
                       </Link>
                     </h3>
-                    <p className="mt-1 text-sm text-gray-500">Stok : tersedia</p>
+                    <p className="mt-1 text-sm text-gray-500">Stok : {product.stok.length > 0 ? 'Tersedia' : 'Habis'}</p>
                   </div>
                   <p className="text-sm font-medium text-gray-900">Rp.{product.harga}</p>
                 </div>

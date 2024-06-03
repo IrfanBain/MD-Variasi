@@ -8,7 +8,6 @@ import { collection, onSnapshot } from "firebase/firestore"
 
 
 export default function ProdukShop() {
-  // const [selected, setSelected] = useState(kategori[0])
   const [products, setProduks] = useState([])
   // eslint-disable-next-line no-unused-vars
   const [loading, setLoading] = useState(false)
@@ -38,9 +37,9 @@ export default function ProdukShop() {
 
   const categoryText = {
     "all" : "Semua Produk",
-    "interior": "Interior Mobil",
-    "eksterior": "Eksterior Mobil",
-    "lampu": "Lampu Variasi",
+    "Interior": "Interior Mobil",
+    "Eksterior": "Eksterior Mobil",
+    "Lampu": "Lampu Variasi",
   };
 
   return (
@@ -55,20 +54,20 @@ export default function ProdukShop() {
             Semua produk <GoChevronRight />
           </button>
           <button
-            className={`flex px-4 sm:px-6 lg:px-8 justify-between items-center ${selectedCategory === "interior"? "text-blue-500" : "text-gray-700"}`}
-            onClick={() => setSelectedCategory("interior")}
+            className={`flex px-4 sm:px-6 lg:px-8 justify-between items-center ${selectedCategory === "Interior"? "text-blue-500" : "text-gray-700"}`}
+            onClick={() => setSelectedCategory("Interior")}
           >
             Interior mobil <GoChevronRight />
           </button>
           <button
-            className={`flex px-4 sm:px-6 lg:px-8 justify-between items-center ${selectedCategory === "eksterior"? "text-blue-500" : "text-gray-700"}`}
-            onClick={() => setSelectedCategory("eksterior")}
+            className={`flex px-4 sm:px-6 lg:px-8 justify-between items-center ${selectedCategory === "Eksterior"? "text-blue-500" : "text-gray-700"}`}
+            onClick={() => setSelectedCategory("Eksterior")}
           >
             Ekterior Mobil <GoChevronRight />
           </button>
           <button
-            className={`flex px-4 sm:px-6 lg:px-8 justify-between items-center ${selectedCategory === "lampu"? "text-blue-500" : "text-gray-700"}`}
-            onClick={() => setSelectedCategory("lampu")}
+            className={`flex px-4 sm:px-6 lg:px-8 justify-between items-center ${selectedCategory === "Lampu"? "text-blue-500" : "text-gray-700"}`}
+            onClick={() => setSelectedCategory("Lampu")}
           >
             Lampu variasi <GoChevronRight />
           </button>
@@ -82,20 +81,20 @@ export default function ProdukShop() {
             Semua
           </button>
           <button
-            className={`flex px-4 sm:px-6 lg:px-8 justify-between items-center ${selectedCategory === "inter"? "text-blue-500 border-b-2 border-blue-500" : "text-gray-700"}`}
-            onClick={() => setSelectedCategory("interior")}
+            className={`flex px-4 sm:px-6 lg:px-8 justify-between items-center ${selectedCategory === "Interior"? "text-blue-500 border-b-2 border-blue-500" : "text-gray-700"}`}
+            onClick={() => setSelectedCategory("Interior")}
           >
             Interior
           </button>
           <button
-            className={`flex px-4 sm:px-6 lg:px-8 justify-between items-center ${selectedCategory === "ekster"? "text-blue-500 border-b-2 border-blue-500" : "text-gray-700"}`}
-            onClick={() => setSelectedCategory("eksterior")}
+            className={`flex px-4 sm:px-6 lg:px-8 justify-between items-center ${selectedCategory === "Eksterior"? "text-blue-500 border-b-2 border-blue-500" : "text-gray-700"}`}
+            onClick={() => setSelectedCategory("Eksterior")}
           >
             Ekterior
           </button>
           <button
-            className={`flex px-4 sm:px-6 lg:px-8 justify-between items-center ${selectedCategory === "lamp"? "text-blue-500 border-b-2 border-blue-500" : "text-gray-700"}`}
-            onClick={() => setSelectedCategory("lampu")}
+            className={`flex px-4 sm:px-6 lg:px-8 justify-between items-center ${selectedCategory === "Lampu"? "text-blue-500 border-b-2 border-blue-500" : "text-gray-700"}`}
+            onClick={() => setSelectedCategory("Lampu")}
           >
             Lampu
           </button>
@@ -110,7 +109,9 @@ export default function ProdukShop() {
                 return true
               }
               return product.kategori === selectedCategory;
-            }).map((product) => (
+            })
+            .sort((a, b) => b.timestamp - a.timestamp)
+            .map((product) => (
               <>
               <div key={product.id} className="group relative">
                 <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200  sm:aspect-h-1 sm:aspect-w-1 lg:aspect-none group-hover:opacity-75 lg:h-40">
