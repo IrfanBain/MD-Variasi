@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import Footer from "../../../component/layouts/footer";
 import Navbar from "../../../component/layouts/navbar";
 import { IoLogoWhatsapp } from "react-icons/io"
@@ -46,11 +46,11 @@ export default function ProdukView() {
                                 <img className="w-full h-full object-cover" src={product.img} alt="Product Image" />
                             </div>
                             <div className="flex -mx-2 mb-4">
-                                <div className="w-1/2 px-2">
+                                <Link to={`https://wa.me/+6282136698068?text=halo kak saya ingin membeli barang  ${product.name},,mohon responnya kak`} className="w-1/2 px-2">
                                     <button className="flex gap-2 justify-center w-full items-center bg-green-700 dark:bg-green-700 text-white py-2 px-4 rounded-full font-bold hover:bg-green-800 dark:hover:bg-green-800">
                                     <IoLogoWhatsapp  />
                                         Beli Sekarang</button>
-                                </div>
+                                </Link>
                             </div>
                         </div>
                         <div className="md:flex-1 px-4">

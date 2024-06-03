@@ -14,7 +14,7 @@ export default function LampuList() {
 useEffect(() => {
     setLoading(true);
     const productsRef = collection(db, "product");
-    const q = query(productsRef, where("kategori", "==", "Lampu"), limit(2));
+    const q = query(productsRef, where("kategori", "==", "Lampu"), limit(4));
     const unsub = onSnapshot(q, (snapshot) => {
       let list = [];
       snapshot.docs.forEach((doc) => {

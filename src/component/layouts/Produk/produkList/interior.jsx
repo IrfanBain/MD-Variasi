@@ -13,7 +13,7 @@ export default function InteriorList() {
 useEffect(() => {
     setLoading(true);
     const productsRef = collection(db, "product");
-    const q = query(productsRef, where("kategori", "==", "Interior"), limit(2));
+    const q = query(productsRef, where("kategori", "==", "Interior"), limit(4));
     const unsub = onSnapshot(q, (snapshot) => {
       let list = [];
       snapshot.docs.forEach((doc) => {
